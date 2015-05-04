@@ -1,0 +1,53 @@
+
+{% extends "layout1.html" %}
+{% block content %}
+<!--
+/************************************************************************************
+ * *************************************************************************************
+ * **    This file is a part of youtube-dl_WebUI a simple full python web ui for youtube-dl
+ * **    Contact: bricolo.code@gmail.com
+ * **
+ * *************************************************************************************
+ * *************************************************************************************
+ * **
+ * **    Copyright (C) 2015 bricolo
+ * **    This program is free software: you can redistribute it and/or modify
+ * **    it under the terms of the GNU General Public License as published by
+ * **    the Free Software Foundation, either version 3 of the License, or
+ * **    (at your option) any later version.
+ * **
+ * **    This program is distributed in the hope that it will be useful,
+ * **    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * **    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * **    GNU General Public License for more details.
+ * **
+ * **    You should have received a copy of the GNU General Public License
+ * **    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * **
+ * ***********************************************************************************/
+-->
+<div class="jumbo">
+      <h2>Welcome to the AudioDownloader App</h2>
+      <h3>Powered by flask & youtube-dl using python</h3>
+      <br/><p>To download:<br/>
+	      {% if todownload %}
+	      <ul>{{ todownload }}</ul><br/>
+	      {% else %}
+	      	<code>ERROR WHILE READING todownload file</code>
+		{% endif %}
+		</p>
+	      <form action="{{ url_for('add1') }}" method="POST" >
+		  <label for="link">Link to add</label>
+		  <input id="link" name="link" type="url" placeholder="https://......com/lfdflkds" autocomplete="off" />
+		  <input type="submit" value="Add"/>
+	      </form>
+	      <br/><p>Downloaded:<br/>
+	      {% if downloaded %}
+	      <ul>{{ downloaded }}</ul><br/>
+	      {% else %}
+	      	<code>ERROR WHILE READING downloaded file</code>
+		{% endif %}
+		</p>
+
+  </div>
+{% endblock %}

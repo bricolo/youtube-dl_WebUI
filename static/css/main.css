@@ -1,0 +1,114 @@
+/************************************************************************************
+ * *************************************************************************************
+ * **    This file is a part of youtube-dl_WebUI a simple full python web ui for youtube-dl
+ * **    Contact: bricolo.code@gmail.com
+ * **
+ * *************************************************************************************
+ * *************************************************************************************
+ * **
+ * **    Copyright (C) 2015 bricolo
+ * **    This program is free software: you can redistribute it and/or modify
+ * **    it under the terms of the GNU General Public License as published by
+ * **    the Free Software Foundation, either version 3 of the License, or
+ * **    (at your option) any later version.
+ * **
+ * **    This program is distributed in the hope that it will be useful,
+ * **    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * **    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * **    GNU General Public License for more details.
+ * **
+ * **    You should have received a copy of the GNU General Public License
+ * **    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * **
+ * ***********************************************************************************/
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #444;
+}
+ 
+/*
+ * Create dark grey header with a white logo
+ */
+  
+header {
+  background-color: #2B2B2B;
+  height: 30%;
+  width: 100%;
+  opacity: .9;
+  margin-bottom: 5px;
+}
+ 
+header h1.logo {
+  margin: 0;
+  font-size: 1.7em;
+  font-size: 2.0vw;
+  color: #fff;
+  text-transform: uppercase;
+  float: left;
+  line-height: 0.3;
+}
+ 
+header h1.logo:hover {
+  color: #F4912E;
+  text-decoration: none;
+}
+header h1.logo>a {
+    color: #fff;
+}
+header h1.logo>a:hover{
+    text-decoration: none;
+    color: #F4912E;
+}
+
+/*
+ * Center the body content
+ */
+  
+.container {
+  width: 100%;
+  /*margin: 0 auto;*/
+  margin: 10%%;
+  margin-top: 0;
+  padding: 1%;
+}
+ 
+div.jumbo {
+  padding: 5%;
+  margin-top: 0;
+  background-color: #C4EAFC;
+  word-break: break-all;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+
+}
+
+div.smalljumbo {
+      padding: 2%;
+      margin-top: 1%;
+      background-color: #FCCC64;
+      word-break: break-all;
+      -webkit-border-radius: 6px;
+      -moz-border-radius: 6px;
+      border-radius: 6px
+}
+
+
+h2 {
+  font-size: 3em;
+  margin-top: 40%;
+  text-align: center;
+  letter-spacing: -2px;
+}
+ 
+h3 {
+  font-size: 1.7em;
+  font-weight: 100;
+  margin-top: 30%;
+  text-align: center;
+  letter-spacing: -1px;
+  color: #999;
+}
