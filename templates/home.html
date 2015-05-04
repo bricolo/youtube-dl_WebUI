@@ -33,7 +33,7 @@
 	      {% if todownload %}
 	      <ul>{{ todownload }}</ul><br/>
 	      {% else %}
-	      	<code>ERROR WHILE READING todownload file</code>
+	      	<code>FILE EMPTY OR ERROR WHILE READING todownload file</code>
 		{% endif %}
 		</p>
 	      <form action="{{ url_for('add1') }}" method="POST" >
@@ -45,7 +45,7 @@
 	      {% if downloaded %}
 	      <ul>{{ downloaded }}</ul><br/>
 	      {% else %}
-	      	<code>ERROR WHILE READING downloaded file</code>
+	      	<code>FILE EMPTY OR ERROR WHILE READING downloaded file</code>
 		{% endif %}
 		</p>
 

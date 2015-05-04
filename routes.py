@@ -36,8 +36,12 @@ with open('config.json', 'r') as f:
 f.close()
 
 pathtodownloader = config['pathtodownloader']
-filein = pathtodownloader+config['filein']
-fileout = pathtodownloader+config['fileout']
+filein = config['filein']
+fileout = config['fileout']
+filein = pathtodownloader+filein
+fileout = pathtodownloader+fileout
+print(filein)
+print(fileout)
 debugenabled = config['debugenabled']
 listeningport = int(config['port'])
 hostname = config['host']
