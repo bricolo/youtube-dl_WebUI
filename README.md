@@ -5,16 +5,16 @@ A full python web ui for youtube-dl
 Feel free to ask or comment *constructively*
 
 ## Using:
-bootstrap framwork in MIT license
-flask, a python microframework in BSD License
-youtube-dl
+* bootstrap framwork in MIT license
+* flask, a python microframework in BSD License
+* youtube-dl
 
 ## Installation
 Download: `git clone https://github.com/bricolo/youtube-dl_WebUI`  
-Make sure you have flask and youtube-dl installed
-Edit the options in `setup.py`, and run it
-Then just run `routes.py`
-run `download.py` to start downloading
+Make sure you have flask and youtube-dl installed  
+Edit the options in `setup.py`, and run it  
+Then just run `routes.py`  
+run `download.py` to start downloading  
 
 ## ToDo
 * implement a paralelisation (downloader run every x min while server runningi, that mean a lock)
