@@ -1,6 +1,14 @@
 #!/usr/bin/python
 
-import sys, os, youtube_dl, json
+import sys, os
+
+if not os.path.isfile('config.json'):
+    print('run "run.py" one time first, it will configure and check your dependencies')
+    sys.exit()
+
+
+
+import youtube_dl, json
 
 #load configuration var
 with open('config.json', 'r') as f:
