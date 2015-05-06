@@ -12,7 +12,7 @@ Feel free to ask or comment *constructively*
 ## Installation
 Download: `git clone https://github.com/bricolo/youtube-dl_WebUI`  
 Make sure you have flask and youtube-dl installed  
-run `run.py'  
+run `run.py`  
 run `download.py` to start downloading (not finished yet) 
 
 ## ToDo
