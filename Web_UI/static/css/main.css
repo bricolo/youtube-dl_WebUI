@@ -86,6 +86,10 @@ div.jumbo {
 
 }
 
+input.large{
+    width: 20%;
+}
+
 div.green{
     background-color: #A9D5A9;
 }

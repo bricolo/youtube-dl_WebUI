@@ -27,44 +27,67 @@
 
 import os
 import sys
-import json
+stop = 0
 
 def startupcheck():
     if os.path.isfile('Web_UI/FIRSTRUN'):
-	config = {
-	    'host' : '0.0.0.0',
-	    'port' : 1234,
-	    'pathtodownloader' : 'downloader/',
-	    'appdir' : 'Web_UI/',
-	    'filein' : 'todownload',
-	    'fileout' : 'downloaded',
-	    'debugenabled' : 'True',
-	    'firstrunfile' : 'FIRSTRUN',
-	    }
-	f = open(config['appdir']+config['pathtodownloader']+config['filein'], 'w')
-	f.close()
-	f = open(config['appdir']+config['pathtodownloader']+config['fileout'], 'w')
-	f.close()
-	with open(config['appdir']+'config.json', 'w') as f:
-	    json.dump(config, f)
-	f.close()
-	with open(config['appdir']+config['pathtodownloader']+'config.json', 'w') as f:
-	    json.dump(config, f)
-	f.close()
-
 	error=0
+	print('Assuming you have os and sys imported')
+	print('Try to import json')
+#check if you have json installed
+	try:
+	    import json
+	except ImportError:
+	    error = 1
+	    print("json is not installed in python")
+#create config file
+	if not error==1:
+	    print('creating file and config...')
+	    config = {
+		'host' : '0.0.0.0',
+		'port' : 1234,
+		'pathtodownloader' : 'downloader/',
+		'appdir' : 'Web_UI/',
+		'filein' : 'todownload',
+		'fileout' : 'downloaded',
+		'debugenabled' : 'True',
+		'firstrunfile' : 'FIRSTRUN',
+		}
+	    f = open(config['appdir']+config['pathtodownloader']+config['filein'], 'w')
+	    f.close()
+	    f = open(config['appdir']+config['pathtodownloader']+config['fileout'], 'w')
+	    f.close()
+	    with open(config['appdir']+'config.json', 'w') as f:
+		json.dump(config, f)
+	    f.close()
+	    #with open(config['appdir']+config['pathtodownloader']+'config.json', 'w') as f:
+		#json.dump(config, f)
+	    #f.close()
+#check if you have flask installed
+	print('Try to import flask...')
 	try:
 	    import flask
 	except ImportError:
 	    error = 1
 	    print("Flask is not installed in python")
-	
+#check if you have youtube_dl python library installed
+	print('Try to import youtube_dl')
 	try:
 	    import youtube_dl
 	except ImportError:
 	    error = 1
 	    print("Youtube-dl is not installed in python")
-	    
+	#return 0 if all OK    
+	try:
+	    import subprocess
+	except ImportError:
+	    error = 1
+	    print("subprocess is not installed in python")
+	try:
+	    import multiprocessing
+	except ImportError:
+	    error = 1
+	    print("multiprocessing is not installed in python")
 	if error == 1:
 	    print("Some errors cannot start, try 'pip install ' to install dependencies")
 	    return 1
@@ -74,15 +97,44 @@ def startupcheck():
 	    return 0
     else:
 	return 0
+#end
 
-def runserver():    
-    from flask import Flask, render_template, request, make_response, redirect, Markup
+
+def rundownloader():
+   from subprocess import call
+   import json
+   with open('Web_UI/config.json', 'r') as f:
+       config = json.load(f)
+   f.close()
+   appdir = config['appdir']
+   pathtodownloader = config['pathtodownloader']
+   pathtodownloader = appdir+pathtodownloader
+   call(pathtodownloader+'download.py')
+   return 0
+#end
+
+def whiledownloader():
+    global stop
+    import time
+    print("testlol")    
+    while stop == 0:
+	time.sleep(20)
+	rundownloader()
+
+
+def runserver():
 
 #ensure that you run setup.py first
     if os.path.exists('Web_UI/FIRSTRUN'):
 	print('run setup.py first')
 	exit.exit()
 
+#import 
+    import json
+    from flask import Flask, render_template, request, make_response, redirect, Markup
+    import threading
+    global stop
+    download_thread = threading.Thread(target=whiledownloader)
 
 #load configuration var
     with open('Web_UI/config.json', 'r') as f:
@@ -100,6 +152,7 @@ def runserver():
     listeningport = int(config['port'])
     hostname = config['host']
 
+#declare function
     def showfile(filetoread):
 	f = open(filetoread, 'r')
 	string1 = ''
@@ -122,9 +175,9 @@ def runserver():
 	    raise RuntimeError('Not running with the Werkzeug Server')
 	func()
 
-
+#create a new flask in app
     app = Flask(__name__)
-
+#routing rules
     @app.route('/')
     def home():
 	return render_template('home.html', todownload=Markup(showfile(filein)), downloaded=Markup(showfile(fileout)))
@@ -137,6 +190,7 @@ def runserver():
 	return render_template('add1.html', link=linktoadd)
     @app.route("/shutdown")
     def shutdown():
+	stop = 1
 	shutdown_server()
 	return 'Server shutting down...'
 		
@@ -144,7 +198,7 @@ def runserver():
     def not_found(error):
 	return render_template('error.html'), 404
     
-    
+    #start
     app.run(debug=debugenabled, port=listeningport, host=hostname)
 #exit when server stop
     sys.exit()

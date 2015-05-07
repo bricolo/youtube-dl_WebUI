@@ -33,19 +33,19 @@
 	      {% if todownload %}
 	      <ul>{{ todownload }}</ul><br/>
 	      {% else %}
-	      	<code>FILE EMPTY OR ERROR WHILE READING todownload file</code>
+	      	<code>FILE IS EMPTY: Nothing to download</code>
 		{% endif %}
 		</p>
 	      <form action="{{ url_for('add1') }}" method="POST" >
 		  <label for="link">Link to add</label>
-		  <input id="link" name="link" type="url" placeholder="https://......com/lfdflkds" autocomplete="off" />
+		  <input id="link" name="link" type="url" class="large" placeholder="https://......com/lfdflkds" autocomplete="off" />
 		  <input type="submit" value="Add"/>
 	      </form>
 	      <br/><p>Downloaded:<br/>
 	      {% if downloaded %}
 	      <ul>{{ downloaded }}</ul><br/>
 	      {% else %}
-	      	<code>FILE EMPTY OR ERROR WHILE READING downloaded file</code>
+	      	<code>FILE IS EMPTY: Nothing downloaded</code>
 		{% endif %}
 		</p>
 
