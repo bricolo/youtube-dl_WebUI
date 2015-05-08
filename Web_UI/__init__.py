@@ -124,12 +124,13 @@ def whiledownloader():
 
 def runserver():
 
-#ensure that you run setup.py first
+#ensure that you run setup first
     if os.path.exists('Web_UI/FIRSTRUN'):
 	print('run setup.py first')
 	exit.exit()
 
 #import 
+    import time
     import json
     from flask import Flask, render_template, request, make_response, redirect, Markup
     import threading
@@ -151,7 +152,7 @@ def runserver():
     debugenabled = config['debugenabled']
     listeningport = int(config['port'])
     hostname = config['host']
-
+    filelock = pathtodownloader+'LOCK'
 #declare function
     def showfile(filetoread):
 	f = open(filetoread, 'r')
@@ -163,10 +164,12 @@ def runserver():
 
 
     def addtofile(filein1, stringtoadd):
+	lockfile(filelock, 1)
 	f = open(filein1, 'a')
 	s = stringtoadd+'\n'
 	f.write(s)
 	f.close()
+	lockfile(filelock, 0)
 	return 0
 
     def shutdown_server():
@@ -174,6 +177,16 @@ def runserver():
 	if func is None:
 	    raise RuntimeError('Not running with the Werkzeug Server')
 	func()
+
+    def lockfile(filelocker, lock):
+	if lock==1:
+	    while os.path.isfile(filelocker):
+		time.sleep(5)
+	    open(filelocker, 'a').close()
+	else:
+	    os.remove(filelocker)
+	return 0
+
 
 #create a new flask in app
     app = Flask(__name__)

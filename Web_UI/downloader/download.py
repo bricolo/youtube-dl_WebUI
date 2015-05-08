@@ -45,9 +45,18 @@ filein = config['filein']
 fileout = config['fileout']
 filein = pathtodownloader+filein
 fileout = pathtodownloader+fileout
+filelock = pathtodownloader+'LOCK'
 #debugenabled = config['debugenabled']
 #listeningport = int(config['port'])
 #hostname = config['host']
+def lockfile(filelocker, lock):
+    if lock==1:
+	while os.path.isfile(filelocker):
+	    time.sleep(5)
+	open(filelocker, 'a').close()
+    else:
+	os.remove(filelocker)
+    return 0
 
 def preprocessing(filetoprocess):
 # Get file contents
@@ -110,17 +119,15 @@ if len(preprocessing(filein))>0:
 	'ignoreerrors': True,
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-#open file	
-	f = open(fileout, "a")
 #get link from the file
 	todownloadlinks = filetostrings(filein)
 #download and convert 
 	for link in todownloadlinks:
 	    print(link)
 	    ydl.download([link])
-	    f.write(link+'\n')
 	    print('Done: '+link)
 #write downloaded link to file out
+	lockfile(filelock, 1)
 	with open(fileout,"a") as output: 
 	    for line in todownloadlinks:
 		    output.write(line)
@@ -134,8 +141,10 @@ if len(preprocessing(filein))>0:
 	with open(filein,"a") as output:#write non downloaded link
 	    for line in todownloadnext:
 		output.write(line)
+	lockfile(filelock, 0)
 else:#if nothing in todownload
     print('Nothing to download')
 
 print('Well Done')
+
 
