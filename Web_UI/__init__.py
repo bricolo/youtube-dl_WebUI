@@ -27,7 +27,6 @@
 
 import os
 import sys
-stop = 0
 
 def startupcheck():
     if os.path.isfile('Web_UI/FIRSTRUN'):
@@ -113,15 +112,6 @@ def rundownloader():
    return 0
 #end
 
-def whiledownloader():
-    global stop
-    import time
-    print("testlol")    
-    while stop == 0:
-	time.sleep(20)
-	rundownloader()
-
-
 def runserver():
 
 #ensure that you run setup first
@@ -133,9 +123,6 @@ def runserver():
     import time
     import json
     from flask import Flask, render_template, request, make_response, redirect, Markup
-    import threading
-    global stop
-    download_thread = threading.Thread(target=whiledownloader)
 
 #load configuration var
     with open('Web_UI/config.json', 'r') as f:
